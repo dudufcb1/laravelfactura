@@ -33,7 +33,15 @@
     <div class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
       {{ $slot }}
     </div>
+
+    <!-- FAQ Section -->
+    <div class="w-full max-w-4xl mx-auto px-4 mt-12">
+      <x-faq-section />
+    </div>
   </div>
+
+  <!-- Footer -->
+  <x-footer />
 </body>
 
 </html>
