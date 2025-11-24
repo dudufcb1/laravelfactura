@@ -32,8 +32,17 @@
                 {{ $slot }}
             </main>
 
-            <!-- Footer -->
-            <x-footer />
+            @if(config('app.demo_site', false))
+            <!-- Demo Footer -->
+            <footer class="bg-white border-t border-gray-200 mt-12">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="text-center text-sm text-gray-600">
+                        <p>Built with Laravel & Tailwind CSS</p>
+                        <p class="mt-1">&copy; {{ date('Y') }} LaravelFactura - Demo Version</p>
+                    </div>
+                </div>
+            </footer>
+            @endif
         </div>
     </body>
 </html>

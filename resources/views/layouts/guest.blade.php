@@ -34,14 +34,33 @@
       {{ $slot }}
     </div>
 
+    @if(config('app.demo_site', false))
     <!-- FAQ Section -->
-    <div class="w-full max-w-4xl mx-auto px-4 mt-12">
-      <x-faq-section />
+    <div class="mt-8 w-full bg-white px-6 py-6 shadow-md sm:max-w-2xl sm:rounded-lg">
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">Frequently Asked Questions</h3>
+      <div class="space-y-4">
+        <div>
+          <h4 class="font-medium text-gray-800">What is this demo?</h4>
+          <p class="text-sm text-gray-600 mt-1">This is a demonstration version of our invoicing system. Feel free to explore all features.</p>
+        </div>
+        <div>
+          <h4 class="font-medium text-gray-800">Can I create real invoices?</h4>
+          <p class="text-sm text-gray-600 mt-1">Yes, you can create invoices in this demo, but they are for testing purposes only.</p>
+        </div>
+        <div>
+          <h4 class="font-medium text-gray-800">Is my data safe?</h4>
+          <p class="text-sm text-gray-600 mt-1">This is a demo environment. Data may be reset periodically for testing purposes.</p>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <x-footer />
+    <!-- Footer Credits -->
+    <div class="mt-6 text-center text-sm text-gray-600 pb-6">
+      <p>Built with Laravel & Tailwind CSS</p>
+      <p class="mt-1">&copy; {{ date('Y') }} LaravelFactura - Demo Version</p>
+    </div>
+    @endif
+  </div>
 </body>
 
 </html>
