@@ -12,6 +12,11 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected const DEMO_EMAILS = [
+        'admin@laravelfactura.com',
+        'contador@laravelfactura.com',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -67,6 +72,15 @@ class User extends Authenticatable
     public function isOperator(): bool
     {
         return in_array($this->role, ['cajero', 'contralor', 'contador']);
+    }
+
+    public function isDemoAccount(): bool
+    {
+        if (! $this->email) {
+            return false;
+        }
+
+        return in_array(strtolower($this->email), self::DEMO_EMAILS, true);
     }
 
     /**

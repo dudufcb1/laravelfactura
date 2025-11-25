@@ -123,4 +123,18 @@ return [
     'store' => env('APP_MAINTENANCE_STORE', 'database'),
   ],
 
+  /*
+  |--------------------------------------------------------------------------
+  | Demo Site Configuration
+  |--------------------------------------------------------------------------
+  |
+  | This value determines if the application is running in demo mode.
+  | When enabled, it shows demo credentials, FAQ section, and contact footer.
+  |
+  */
+
+  'demo_site' => env('DEMO_SITE', false),
+
+  'demo_site_notice' => env('DEMO_SITE_NOTICE', 'En modo demo puedes usar todas las funcionalidades. Solo están bloqueados los cambios de correo y contraseña de las cuentas demo.'),
+
 ];

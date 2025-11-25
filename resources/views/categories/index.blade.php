@@ -60,6 +60,7 @@
                 <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                   <a href="{{ route('categories.edit', $category) }}"
                     class="text-indigo-600 hover:text-indigo-900">Editar</a>
+
                   <form action="{{ route('categories.destroy', $category) }}" method="POST" class="inline">
                     @csrf
                     @method('DELETE')
