@@ -171,7 +171,7 @@ class CreateInvoice extends Component
 
     public function updateQuantity($product_id, $quantity)
     {
-        $this->quantities[$product_id] = $quantity;
+        $this->quantities[$product_id] = (int) $quantity;
         $this->calculateTotals();
     }
 
