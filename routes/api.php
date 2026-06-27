@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('companies', CompanyController::class)->only(['index', 'show']);
     Route::apiResource('products', ProductController::class);
     Route::apiResource('invoices', InvoiceController::class);
+    Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'pdf'])->name('invoices.pdf');
     Route::apiResource('payments', PaymentController::class)->only(['index', 'store', 'show']);
 });

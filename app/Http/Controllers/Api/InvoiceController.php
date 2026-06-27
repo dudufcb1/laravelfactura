@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\Company;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -159,5 +160,46 @@ class InvoiceController extends Controller
         $invoice->voidInvoice('Anulada vía API', auth()->id());
 
         return response()->json(['message' => 'Factura anulada.']);
+    }
+
+    public function pdf(Invoice $invoice)
+    {
+        $invoice->load(['client', 'company', 'products']);
+
+        $logoImage = null;
+        if ($invoice->company->logo_path) {
+            if (Storage::exists($invoice->company->logo_path)) {
+                $imageData = Storage::get($invoice->company->logo_path);
+                $type = pathinfo($invoice->company->logo_path, PATHINFO_EXTENSION);
+                $logoImage = 'data:image/' . $type . ';base64,' . base64_encode($imageData);
+            }
+        }
+
+        $statusPath = 'public/company-logos/' . ($invoice->status === 'paid' ? 'Pagado.png' : 'Pendiente.png');
+        $statusImage = null;
+        if (Storage::exists($statusPath)) {
+            $imageData = Storage::get($statusPath);
+            $type = pathinfo($statusPath, PATHINFO_EXTENSION);
+            $statusImage = 'data:image/' . $type . ';base64,' . base64_encode($imageData);
+        }
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('invoices.pdf', [
+            'invoice' => $invoice,
+            'logoImage' => $logoImage,
+            'statusImage' => $statusImage,
+        ]);
+
+        $filename = 'Factura_' . $invoice->invoice_series . '-' . $invoice->invoice_number . '.pdf';
+
+        return response()->json([
+            'base64' => base64_encode($pdf->output()),
+            'filename' => $filename,
+            'mimetype' => 'application/pdf',
+            'invoice_number' => $invoice->invoice_series . '-' . $invoice->invoice_number,
+            'client' => $invoice->client->name ?? $invoice->client->business_name,
+            'total' => $invoice->total,
+            'currency' => $invoice->currency,
+        ]);
     }
 }
